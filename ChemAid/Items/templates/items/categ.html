@@ -1,0 +1,113 @@
+{% extends 'items/itemsbase.html' %}
+{% block title %}Items{% endblock %}
+{% block content %}
+<style>
+.card {
+  position: relative;
+  background-color: white;
+  height: 200px;
+}
+
+.img-fluid {
+  opacity: 1;
+  display: block;
+  width: 75%;
+  height: auto;
+  transition: .5s ease;
+  backface-visibility: hidden;
+  margin-top: 20px;
+}
+
+.middle {
+  transition: .3s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+
+.card:hover .img-fluid {
+  opacity: 0.3;
+}
+
+.card:hover .middle {
+  opacity: 1;
+}
+
+.white-text {
+  background-color: #4CAF50;
+  color: white;
+  font-size: 12px;
+  padding: 16px 28px;
+}
+[type=radio] { 
+          position: absolute;
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+		[type=radio] + img {
+          cursor: pointer;
+        }
+		[type=radio]:checked + img {
+          outline: 2px solid #B7BABC;
+        }
+		.img {
+		  -webkit-filter: grayscale(1); /* Webkit */
+		  filter: gray; /* IE6-9 */
+		  filter: grayscale(1); /* W3C */
+		}
+</style>
+<br />
+	<center><h4 class="text-white" style="font-family: 'Poppins', sans-serif;font-size:80px;">Categories</h4></center>
+	{% load staticfiles %}
+	<div class="container">
+		<div class='row mt-3'>
+		{% for categ in category %}
+			<div class="col-md-3" style="margin-left: 65px; margin-bottom:20px; width: 12rem;">	
+			<!--
+				<div class="card" style="margin-left: 65px; margin-bottom:20px; width: 12rem;">
+				  <img src="{{ categ.picture.url }}" class="card-img-top mx-auto mt-3" alt="..." style="height: 150px;width:150px;">
+				  <div class="card-body">
+				    <center><h5 class="card-title" style="font-family: 'Poppins', sans-serif;font-weight: bolder;">{{ categ.name }}</h5>
+				    <a href="{% url 'borrow' categ.id %}" class="btn btn-secondary">Click to borrow</a></center>
+				  </div>
+				</div>
+				-->
+				<div class="card">
+					<center>
+				    <img src="{{ categ.picture.url }}" class="img-fluid " alt="..." style="height: 150px;width:150px;">
+				    <div class="middle">
+				        <p class="white-text">{{ categ.name }}</p>
+				        <a href="{% url 'borrow' categ.id %}" class="btn btn-secondary">Click to borrow</a>
+					</div>
+					</center>
+				</div>
+			</div>
+	
+		{% endfor %}
+		</div>
+	</div>
+{% endblock %}
+{% block script %}
+	<script>
+		$(document).ready(function(){
+			$('.col-md-3').hover(
+				function(){
+					$(this).animate({
+						marginTop: "-=1%"
+					},200);
+				},
+				function(){
+					$(this).animate({
+						marginTop: "0%"
+					},200);
+				}
+			);
+		});
+	</script>
+{% endblock %}

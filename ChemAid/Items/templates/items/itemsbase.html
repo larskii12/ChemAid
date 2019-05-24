@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>{% block title %}{% endblock %}</title>
+	<link href="https://fonts.googleapis.com/css?family=Josefin+Sans:100|Lato:100|Quicksand:300|Raleway:100|Poppins:100" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.2/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="icon" type="image/png" href="/static/home/media/boiling_water-512.png">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/query.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<style>
+		body{
+			background-image: url("/static/home/media/sub.jpg");
+			min-height: 768px;
+			  /* Center and scale the image nicely */
+			  background-position: center;
+			  background-repeat: no-repeat;
+			  background-size: cover;
+
+			  position: relative;
+		}
+	</style>
+</head>
+<body>
+	<header class="site-header">
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<div class="container">
+				<a class="navbar-brand" href="#">
+					<img src="/static/home/media/boiling_water-512.svg" alt="">ChemAid: Items
+				</a>
+				<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+	  				<ul class="navbar-nav mr-auto">
+	  				<li class="nav-item dropdown">
+				        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+				        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+				          <a class="dropdown-item" href="{% url 'home' %}">Home</a>
+				          <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
+				          <a class="dropdown-item" href="{% url 'options' %}">Items</a>
+				          <div class="dropdown-divider"></div>
+				          <a class="dropdown-item" href="{% url 'log_out' %}">Logout</a>
+				        </div>
+				      </li>
+				    </ul>
+	  				<form class="form-inline">
+				    	<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+				    	<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+					</form>
+				</div>
+			</div>
+		</nav>
+	</header>
+	    {% block content %}
+        {% endblock %}
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    {% block script %}{% endblock %}
+</body>
+</html>

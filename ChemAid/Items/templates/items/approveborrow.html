@@ -1,0 +1,46 @@
+{% extends 'adminbase.html' %}
+{% block content %}
+<div>
+        {% csrf_token %}
+        {% load staticfiles %}
+        <div class="alert alert-info">Transaction</div>
+        <table id="table" class="table table-stripped">
+            <thead class="alert-success">
+            <tr>
+                <th>Image</th>
+                <th>Item Title</th>
+                <th>Borrowed by:</th>
+                <th>No. of Borrowed Items</th>
+                <th>Date Borrowed</th>
+                <th>Due Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for borrow in borrows %}
+                <tr>
+                    <td><img  src="{{ borrow.picture.url }}" style="height:75px; width:75px;" class="img-responsive" align="left"></td>
+                    <td>{{ borrow.name_item }}</td>
+                    <td>{{ borrow.borrower }}</td>
+                    <td>{{ borrow.num_of_items }}</td>
+                    <td>
+                        {{ borrow.date }}
+                    </td>
+                    <td>{{ borrow.due_date}}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+</div>
+{% endblock %}
+{% block script %}
+<script src="{% static 'js/jquery-2.2.3.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/datatables.min.js' %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+<script>
+$(document).ready(function(){
+    $('#table').dataTable();
+});
+</script>
+{% endblock %}

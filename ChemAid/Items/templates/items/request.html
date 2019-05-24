@@ -1,0 +1,85 @@
+{% extends 'adminbase.html' %}
+{% block content %}
+<div>
+        <div class="alert alert-info">Transaction / Borrowing</div>
+        <form method="POST" action="">
+            {% csrf_token %}
+            {% load staticfiles %}
+            <!--<div class="form-group pull-left">
+                <label>Student Name:</label>
+                <br/>
+                <select class="form-control" name="student_id" id="student">
+                    {% for student in students %}
+                        <option value='{{ student.id }}'>{{ student.firstname }} {{ student.lastname }}</option>
+                    {% endfor %}
+                </select>
+            </div>-->
+            <div class="Fixed">
+                
+                <button type="submit" name="save_borrow" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span>
+                    Approve
+                </button>
+                
+            </div>
+            <label>Enter no. of items that you will approve to borrow:</label>
+            <div class="station"><input type="text" name="num" min="1" max="{{ it.available }}" size="5"></div>
+            <br />
+            {% for message in messages %}
+
+                    <div class="alert alert-success">
+                        <a class="close" href="#" data-dismiss="alert">×</a>
+
+                        {{ message }}
+
+                    </div>
+            {% endfor %}
+            <table id="table" class="table table-stripped">
+                <thead class="alert-success">
+                <tr>
+                    <th>Select</th>
+                    <th>Picture</th>
+                    <th>Item Title</th>
+                    <th>Borrowed by:</th>
+                    <th>No. of Borrowed Items</th>
+                    <th>Date borrowed:</th>
+                    <th>Action</th>
+                    
+                </tr>
+                </thead>
+                <tbody>
+                {% for pending in pend %}
+                    <tr>
+                        <td>
+                            <input type="hidden" name="pending_id" value="{{ pending_id }}">
+                            <input type="radio" name="select" value="{{ pending.id }}">
+                        </td>
+                        <td><img  src="{{ pending.picture.url }}" style="height:75px; width:75px;" class="img-responsive" align="left"></td>
+                        <td>{{ pending.name_of_item }}</td>
+                        
+                      
+                        <td>{{ pending.user_borrow.first_name }}</td>
+                        <td>{{ pending.num_of_items }}</td>
+                        <td>
+                            {{ pending.date }}
+                        </td>
+                        <td><a class="btn btn-danger delitem_id" href="{% url 'cancel' pending.id %}"><span
+                                class="glyphicon glyphicon-remove"></span>Cancel</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </form>
+    </div>
+{% endblock %}
+{% block script %}
+<script src="{% static 'js/jquery-2.2.3.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/datatables.min.js' %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+<script>
+$(document).ready(function(){
+    $('#table').dataTable();
+});
+</script>
+{% endblock %}

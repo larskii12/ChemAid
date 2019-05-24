@@ -1,0 +1,106 @@
+{% extends 'items/itemsbase.html' %}
+{% block title %}Borrow Items{% endblock %}
+{% block content %}
+<style>
+    [type=radio] { 
+          position: absolute;
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+        [type=radio] + img {
+          cursor: pointer;
+        }
+        [type=radio]:checked + img {
+          outline: 2px solid #B7BABC;
+        }
+        .img {
+          -webkit-filter: grayscale(1); /* Webkit */
+          filter: gray; /* IE6-9 */
+          filter: grayscale(1); /* W3C */
+        }
+    .card:hover {
+        -webkit-box-shadow: -1px 9px 40px -12px rgba(0,0,0,0.75);
+        -moz-box-shadow: -1px 9px 40px -12px rgba(0,0,0,0.75);
+        box-shadow: -1px 9px 40px -12px rgba(0,0,0,0.75);
+    }
+</style>
+<center><h4  style="font-color:black;font-family: 'Poppins', sans-serif;font-size:50px;">Category: {{ cat.name }}</h4></center>
+<!--<div class="alert alert-info">Transaction / Borrowing</div>-->
+        <form method="POST" action="">
+            {% csrf_token %}
+            {% load staticfiles %}
+            {% for message in messages %}
+                <div class="alert alert-success">
+                <a class="close" href="#" data-dismiss="alert">×</a>
+                {{ message }}
+                </div>
+            {% endfor %}
+            <div class="d-flex flex-row-reverse">
+                <div class="card mr-5"style="padding: 10px 40px;">
+                    <center>
+                    <div class="row">
+                        <label class="mt-1">Enter no. of items to borrow:&nbsp;</label>
+                        <div class="station pl-1 mt-1 pr-1"><input type="text" name="num" min="1" max="{{ it.available }}" size="5"></div>
+                        &nbsp;<button type="submit" name="save_borrow" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-thumbs-up"></span>Borrow</button>
+                    </div>
+                    </center>
+                </div>
+            </div>
+            <div class="row ml-5 mt-3">
+                {% for item in cat.item_set.all %}
+                <div class="card" style="margin-left: 65px; margin-bottom:20px; width: 12rem;">
+                    <center>
+                    <h5 class="card-title mt-2" style="font-family: 'Poppins', sans-serif;font-weight: bolder;">{{ item.name }}</h5>
+                    {% if item.available == 0 %}
+                        <label class='text-danger'>Not Available</label>
+                        <img src="{{ item.picture.url }}" class="card-img-top mx-auto mt-3" alt="..." style="height: 150px;width:150px;">
+                    {% else %}
+                        <label>
+                            <input type="radio" name="selector" value="{{ item.id }}">
+                            <img src="{{ item.picture.url }}" class="card-img-top mx-auto mt-3" alt="..." style="height: 150px;width:150px;">
+                        </label>
+                    {% endif %}
+                    <h6 style="font-family: 'Poppins', sans-serif;font-weight: bolder;">Available: {{ item.available }}</h6>
+                    </center>
+                </div>
+                {% endfor %}
+            </div>
+        </form>
+  
+{% endblock %}
+{% block script %}
+    <script>
+        (function($) {
+          $.fn.uncheckableRadio = function() {
+            var $root = this;
+            $root.each(function() {
+              var $radio = $(this);
+              if ($radio.prop('checked')) {
+                $radio.data('checked', true);
+              } else {
+                $radio.data('checked', false);
+              }
+                
+              $radio.click(function() {
+                var $this = $(this);
+                if ($this.data('checked')) {
+                  $this.prop('checked', false);
+                  $this.data('checked', false);
+                  $this.trigger('change');
+                } else {
+                  $this.data('checked', true);
+                  $this.closest('form').find('[name="' + $this.prop('name') + '"]').not($this).data('checked', false);
+                }
+              });
+            });
+            return $root;
+          };
+        }(jQuery));
+
+        $('[type=radio]').uncheckableRadio();
+        $('button').click(function() {
+          $('[value=V2]').prop('checked', true).trigger('change').trigger('click');
+        });
+    </script>
+{% endblock %}
