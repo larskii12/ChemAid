@@ -1,0 +1,82 @@
+{% extends 'student_base.html' %}
+{% block title %}{{ user.first_name }} {{ user.last_name }}{% endblock %}
+{% block content %}
+	<div class="jumbotron text-white">
+		<h1 class="display-4">{{ user.first_name }} {{ user.last_name }} : Profile </h1>
+	</div>
+	{% load staticfiles %}
+	{% load crispy_forms_tags %}
+	<div class="row">
+		<div class="col-md-3 offset-md-1 bg-dark pb-2 pt-2 pl-5">
+			<div style="display: inline-block;">
+        		{% if user.profile.image %}
+        		<img  src="{{ user.profile.image.url }}" height="180" width="180" class="img-responsive" >
+        		{% else %}
+        			<img src="/profile_pics/default.jpg" class="img-responsive" height="180" width="180">
+                {% endif %}
+        	</div>
+		</div>
+
+		<div class="col-md-5 text-white bg-dark pb-2 pt-2">
+			<h3 class="display-6"><i class="fas fa-portrait"></i> Contact Information</h3>
+			<dl class="row bg-white text-dark">
+				<dt class="col-md-5">	
+					<h4 class="display-6 mt-2"><i class="far fa-envelope"></i> Email Address</h4>
+				</dt>
+				<dd class="col-md-6 mt-3">
+					<h5>{{ user.email }}</h5>
+				</dd>
+				<div class="col-md-1 bg-dark"></div>		
+				
+				<dt class="col-md-5">	
+					<h4 class="display-6 mt-2"><i class="fas fa-phone"></i> Contact Number</h4>
+				</dt>
+				<dd class="col-md-6 mt-3">
+					<h5>{{ user.contact_no }}</h5>
+				</dd>
+				<div class="col-md-1 bg-dark"></div>
+			</dl>
+			<h3 class="display-6"><i class="fas fa-user-circle"></i> General Information</h3>
+			<dl class="row bg-white text-dark">
+				<dt class="col-md-5">	
+					<h4 class="display-6 mt-2"><i class="far fa-user"></i> Name</h4>
+				</dt>
+				<dd class="col-md-6 mt-3">
+					<h5>{{ user.first_name }} {{ user.last_name }}</h5>
+				</dd>
+				<div class="col-md-1 bg-dark"></div>
+				<dt class="col-md-5">	
+					<h4 class="display-6 mt-2"><i class="far fa-id-card"></i> Student Number</h4>
+				</dt>
+				<dd class="col-md-6 mt-3">
+					<h5>{{ user.student_number }}</h5>
+				</dd>
+				<div class="col-md-1 bg-dark"></div>		
+				<dt class="col-md-5">	
+					<h4 class="display-6 mt-2"><i class="fas fa-book"></i> Course</h4>
+				</dt>
+				<dd class="col-md-6 mt-3">
+					<h5>{{ user.course }}</h5>
+				</dd>
+				<div class="col-md-1 bg-dark"></div>
+				<dt class="col-md-5">	
+					<h4 class="display-6 mt-2"><i class="fas fa-graduation-cap"></i> Year Level</h4>
+				</dt>
+				<dd class="col-md-6 mt-3">
+					<h5>{{ user.year_lvl }}</h5>
+				</dd>
+				<div class="col-md-1 bg-dark"></div>
+			</dl>
+		</div>
+		<div class="col-md-2 pt-3 text-white bg-dark">
+			<h4 class="display-6"><i class="fas fa-sliders-h"> Settings</i></h4>
+			<div class="container pt-2 pb-2 bg-light">
+				<div class="btn-group-vertical offset-md-2">
+					<a class="btn btn-outline-secondary btn-lg" href="{% url 'updateProfile' %}" role="button">Edit</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+
+{% endblock %}

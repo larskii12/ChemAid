@@ -1,0 +1,55 @@
+{% extends 'adminbase.html' %}
+{% load staticfiles %}
+{% block content %}
+	<br /><br /><center>
+	{% load crispy_forms_tags %}
+	<div class="row">
+		<div class="col-md-3 offset-md-1 bg-dark pb-2 pt-2 pl-5">
+			<div style="display: inline-block; ">
+				<!-- {% if user.student.photo %}
+                                    <img src="{{ user.student.photo.url }}" 
+                                {% else %}
+                                    <img src="{% static 'default.png' %}" c >
+                                {% endif %}
+				-->
+				{% if user.admin.profile.image %}
+        		<img  src="{{ user.admin.profile.image.url }}" height="165" width="150" class="img-responsive" >
+        		{% else %}
+        			<img src="{% static 'default.png' %}" class="img-responsive" height="165" width="150">
+                {% endif %}
+        	</div>
+		</div>
+
+		<div class="col-md-5 text-white bg-dark pb-2 pt-2">
+			<h3 class="display-6"><i class="fas fa-user-circle"></i> General Information</h3>
+			<dl class="row bg-white text-dark">
+
+				<dt class="col-md-5">	
+					<h4 class="display-6 mt-2"><i class="far fa-user"></i> Name</h4>
+				</dt>
+				
+				<dd class="col-md-6 mt-3">
+					<h5>{{ user.first_name }} {{ user.last_name }}</h5>
+				</dd>
+
+				<div class="col-md-1 bg-dark"></div>
+				<dt class="col-md-5">	
+					<h4 class="display-6 mt-2"><i class="fas fa-phone"></i> Contact Number</h4>
+				</dt>
+				<dd class="col-md-6 mt-3">
+					<h5>{{ user.contact_no }}</h5>
+				</dd>
+				<div class="col-md-1 bg-dark"></div>
+				
+			</dl>
+			
+			
+			
+		</div>
+	</div>
+			
+
+
+
+
+ {% endblock %}

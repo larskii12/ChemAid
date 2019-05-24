@@ -1,0 +1,15 @@
+{% extends 'intro_base.html' %}
+{% block title %}Logout{% endblock %}
+{% block content %}
+{% load crispy_forms_tags %}
+<br /><br /><br /><br /><br />
+<div class="container offset-md-3 col-md-5 mx-auto bg-white">
+    <br /><br /><br />
+        <center><h2>You have been logged out</h2></center>
+        <div class="border-top pt-3">
+             <small class="text-muted">
+                <center><a href="{% url 'log_in' %}">Log In Again</a></center>
+             </small>
+        </div>
+</div>
+{% endblock %}

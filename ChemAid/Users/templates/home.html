@@ -1,0 +1,157 @@
+{% extends 'student_base.html' %}
+{% block title %}Home{% endblock %}
+{% block header %}
+<style>
+    .scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
+</style>
+    <ul class="navbar-nav mr-3">
+        <li class="nav-item dropdown">
+            {% if notif.count == 0 %}
+            <button class="btn btn-secondary dropdown-toggle" href="#" id="{{ notif.count }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-globe"></i>Notification</button>
+            <div class="dropdown-menu scrollable-menu" aria-labelledby="notifDropdown">
+                {% for notification in notif %}
+                <div class="dropdown-item">
+                    <h5>{{ notification.title }}</h5>
+                    <p class="display-6">{{ notification.message }}</p>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+                <button class="btn btn-secondary dropdown-toggle" href="#" id="{{ notif.count }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Notification</button>
+                <span class="button__badge" id='badge'>{{ notif.count }}</span>
+                <div class="dropdown-menu scrollable-menu" aria-labelledby="notifDropdown">
+                    {% for notification in notif %}
+                    <div class="dropdown-item">
+                    <h5>{{ notification.title }}</h5>
+                    <p class="display-6">{{ notification.message }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </li>
+   </ul>
+{% endblock %}
+{% block content %}
+<style>
+.carousel{
+    background: #2f4357;
+    height: 300px;
+}
+.carousel-item{
+    object-fit: scale-down;
+    text-align: center;
+   /* Prevent carousel from being distorted if for some reason image doesn't load */
+    width:100%;
+    height:300px;
+    img{
+        display:none;
+    }
+}
+.bs-example{
+  margin-bottom: 5px;
+  margin-right: 50px;
+  margin-left: 50px;
+  opacity:0.9;
+}
+</style>
+{% load staticfiles %}
+<div class="bs-example">
+<div id="myCarousel" class="carousel slide" data-interval="3000" data-ride="carousel">
+        <!-- Carousel indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+            <li data-target="#myCarousel" data-slide-to="3"></li>
+        </ol>
+        <!-- Wrapper for carousel items -->
+        <div class="carousel-inner" role="listbox" style=" width:100%; height: 500px !important;">
+            <div class="carousel-item active">
+                <img src="https://i.pinimg.com/564x/15/11/63/151163f5dd94b219b3766675fe7251d9.jpg" alt="First Slide">
+            </div>
+            <div class="carousel-item">
+                <img src="https://i.pinimg.com/564x/4a/62/ba/4a62ba68b4287f77a6f530dc3fa456da.jpg" alt="Second Slide">
+            </div>
+            <div class="carousel-item">
+                <img src="https://i.pinimg.com/564x/0e/aa/2d/0eaa2dd017b12be85f5751b7872d70ed.jpg" alt="Third Slide">
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'home/car-1.jpg' %}" alt="Fourth Slide">
+            </div>
+        </div>
+        <!-- Carousel controls -->
+        <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" href="#myCarousel" data-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </a>
+    </div>
+</div>
+<br />
+<div class="container bg-white">
+	<h4 class="display-4" style="color:grey;"><center>Welcome back, {{ user_b.first_name }}!</center></h4>
+	<br />
+	<div class="row">
+        <div class="alert alert-secondary ml-5 col-md-9 mx-auto" style="opacity:0.8;">
+        	<center><div class="pb-2 mb-2 border-bottom" style="{border-bottom: black;font-family: 'Poppins',sans-serif;}">Borrowed Items</div></center>
+        <form method="POST" action="">
+            {% csrf_token %}
+            <center>
+            <table id="table" class="table table-striped table-hover table-bordered" style="font-weight: lighter;">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Date Borrowed</th>
+                    <th>Due Date</th>
+                    
+                </tr>
+                </thead>
+                <tbody class="text-dark">
+                {% for borrow in user_b.borrow_set.all %}
+                    <tr>
+                        <td>{{ borrow.name_item }}</td>
+                        <td>{{ borrow.cat_name }}</td>
+                        <td>
+                            {{ borrow.date }}
+                        </td>
+                        <td>{{ borrow.due_date }}</td>
+                        
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </center>
+        </form>
+        </div>
+        <!--
+        <div class="alert alert-secondary offset-md-1 col-md-4"> 
+			Notification
+		</div>-->
+	</div>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+$(".carousel-item").each(function() {
+  var img_url = $(this).find('img').attr('src');
+  $(this).css({
+    'background-size': 'cover',
+    'background-image': 'url(' + img_url + ')',
+    'background-position': '50% 50%'
+  });
+  $(this).find('img').hide();
+});
+$('.dropdown-toggle').on('click', function (){
+    $.ajax({
+        url: 'http://127.0.0.1:8000/ChemAid/home',
+        method: 'POST'
+    });
+});
+</script>
+{% endblock %}

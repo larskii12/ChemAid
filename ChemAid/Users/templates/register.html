@@ -1,0 +1,26 @@
+{% extends 'student_base.html' %}
+{% block title %}Register{% endblock %}
+{% block content %}
+{% load crispy_forms_tags %}
+<br /><br /><br />
+<div class="container bg-white col-md-6 pb-3" style="opacity:0.9;">
+        <center><div class="content-section col-md-8">
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4 pt-3"><h2 style="font-family:'Poppins', sans-serif;font-weight: bold;">Register</h2></legend>
+                    {{ form|crispy }}   
+                </fieldset>
+                <div class="form-group mx-auto">
+                    <button class="btn btn-outline-info btn-lg" type="submit">Sign Up</button>
+                </div>
+            </form>
+            <div class="border-top pt-3">
+                <small class="text-muted">
+                    Already Have An Account? <a class="ml-2" href="{% url 'log_in' %}">Sign In</a>
+                </small>
+            </div>
+        </div></center>
+</div>
+<br /><br />
+{% endblock %}
